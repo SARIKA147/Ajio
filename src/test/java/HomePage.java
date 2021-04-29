@@ -19,6 +19,7 @@ public class HomePage extends BasePage{
     private By size=By.xpath("//div[@class='size-variant-block']/div[@class='size-swatch']/div[.='M']");
     private By addtToCartButton=By.xpath("//*[@class='pdp-addtocart-button']");
     private By gotToCartButton=By.xpath("//*[@class='btn-cart']");
+    private By emailIdTextBox=By.name("username");
 
     private By price=By.xpath("//span[contains(text(),'price')]");
     private By minTextBox=By.id("minPrice");
@@ -186,7 +187,13 @@ public class HomePage extends BasePage{
             findElement(proceedShipingButton);
             click(proceedShipingButton);
             implicitWait(10);
+            boolean b=findElement(emailIdTextBox).isEnabled();
+            Assert.assertTrue(b=true,"Email Id field is not enabled");
             Reports.extentTest.log(Status.PASS,"Selected Item "+searchKeyword,MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+        }
+        catch(AssertionError e){
+            Reports.extentTest.log(Status.FAIL,"Selected Item "+searchKeyword,MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
        catch (Exception e)
         {
