@@ -30,15 +30,13 @@ public class BasePage {
     {
         driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
     }
-    public void mousehoverMainMenu(By locator)
-    {
+    public void mousehoverMainMenu(By locator){
         Actions actions = new Actions(driver);
         WebElement mainMenu = findElement(locator);
         Action mouseOverHome = actions.moveToElement(mainMenu).build();
         mouseOverHome.perform();
     }
-    public void mousehoverSubMenu(By locator)
-    {
+    public void mousehoverSubMenu(By locator) {
         Actions actions = new Actions(driver);
         WebElement subMenu = findElement(locator);
         actions.moveToElement(subMenu);
@@ -56,8 +54,7 @@ public class BasePage {
         locateElement(locator).click();
     }
 
-    public void selectDropDown(By locator, String text)
-    {
+    public void selectDropDown(By locator, String text) {
         WebElement drop=findElement(locator);
         Select dropdown= new Select(drop);
         dropdown.selectByVisibleText(text);

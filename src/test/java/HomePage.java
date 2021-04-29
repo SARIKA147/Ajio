@@ -117,17 +117,19 @@ public class HomePage extends BasePage{
     }
     /*------------------------------------------------------------------------------------------  */
     public void searchItem(String searchKeyword) throws IOException {
-
-
         try{
             search(searchKeyword);
             Assert.assertEquals(getText(headerText).toLowerCase(),searchKeyword.toLowerCase(),"Displayed item is not "+searchKeyword);
             Reports.extentTest.log(Status.PASS,"Selected Item : "+searchKeyword, MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
-
+        }
+        catch(AssertionError e){
+            Reports.extentTest.log(Status.FAIL,"Selected Item : "+searchKeyword,MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
         catch (Exception e)
         {
             Reports.extentTest.log(Status.FAIL,"Selected Item : "+searchKeyword,MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
     }
 
@@ -137,9 +139,14 @@ public class HomePage extends BasePage{
             Assert.assertEquals(getText(headerText).toLowerCase(),searchKeyword.toLowerCase(),"Entered item is "+searchKeyword);
             Reports.extentTest.log(Status.PASS,"Searched Item: "+searchKeyword,MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
         }
+        catch(AssertionError e){
+            Reports.extentTest.log(Status.FAIL,"Searched Item: "+searchKeyword,MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
+        }
         catch (Exception e)
         {
             Reports.extentTest.log(Status.FAIL,"Searched Item: "+searchKeyword,MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
     }
 
@@ -148,12 +155,15 @@ public class HomePage extends BasePage{
             search(searchKeyword);
             Assert.assertEquals(getText(headerText).toLowerCase(),searchKeyword.toLowerCase(),"Displayed Brand is not "+searchKeyword);
             Reports.extentTest.log(Status.PASS,"Selected Brand: "+searchKeyword,MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
-
         }
-
+        catch(AssertionError e){
+            Reports.extentTest.log(Status.FAIL,"Selected Brand: "+searchKeyword,MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
+        }
         catch (Exception e)
         {
             Reports.extentTest.log(Status.FAIL,"Selected Brand: "+searchKeyword,MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
     }
 
@@ -165,6 +175,7 @@ public class HomePage extends BasePage{
         catch (Exception e)
         {
             Reports.extentTest.log(Status.FAIL,"Selected Item "+searchKeyword,MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
     }
 
@@ -177,9 +188,10 @@ public class HomePage extends BasePage{
             implicitWait(10);
             Reports.extentTest.log(Status.PASS,"Selected Item "+searchKeyword,MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
         }
-        catch (Exception e)
+       catch (Exception e)
         {
             Reports.extentTest.log(Status.FAIL,"Selected Item "+searchKeyword,MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
     }
 
@@ -201,18 +213,19 @@ public class HomePage extends BasePage{
             click(priceFilterButton);
             //implicitWait(10);
             Thread.sleep(2000);
-
-
             String assertText=getText(priceMinMaxDisplay);
             Assert.assertTrue(assertText.contains("Rs.100 - Rs.500"),"Displayed items are not in the range 100-500");
             Reports.extentTest.log(Status.PASS,"Displayed " +searchKeyword+" for price between:100-500",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
-
+        }
+        catch(AssertionError e){
+            Reports.extentTest.log(Status.FAIL,"Displayed " +searchKeyword+" for price between:100-500",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
         catch (Exception e)
         {
             Reports.extentTest.log(Status.FAIL,"Displayed " +searchKeyword+" for price between:100-500",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
-
     }
 
     public void filterItemBasedOnGender(String searchKeyword) throws IOException {
@@ -226,13 +239,16 @@ public class HomePage extends BasePage{
             String countfinal=getText(count);
             Assert.assertTrue((countinitial!=countfinal),"Elements not filtered properly");
             Reports.extentTest.log(Status.PASS,"Selected Gender is Boys and verified the count",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
-
+        }
+        catch(AssertionError e){
+            Reports.extentTest.log(Status.FAIL,"Selected Gender is Boys and verified the count",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
         catch (Exception e)
         {
             Reports.extentTest.log(Status.FAIL,"Selected Gender is Boys and verified the count",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
-
     }
 
     public void verifyFaq() throws IOException {
@@ -259,52 +275,58 @@ public class HomePage extends BasePage{
             Assert.assertTrue(b=true,"Shipping FAQ Link and Cancellation FAQ Link not visible");
             Reports.extentTest.log(Status.PASS,"Verify Cancellation and Shipping Faq Link ",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
         }
+        catch(AssertionError e){
+            Reports.extentTest.log(Status.FAIL,"Verify Cancellation and Shipping Faq Link",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
+        }
         catch (Exception e)
         {
             Reports.extentTest.log(Status.FAIL,"Verify Cancellation and Shipping Faq Link",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
     }
 
     public void filterPriceLowest(String searchKeyword) throws IOException {
         try{
             search(searchKeyword);
-            locateElement(filterDropdown);
-            findElement(filterDropdown);
             selectDropDown(filterDropdown,"Price (lowest first)");
             Thread.sleep(1000);
-            implicitWait(10);
+            //implicitWait(10);
             String text=getSelectedTextFromDropDown(filterDropdown);
             Assert.assertEquals(text,"Price (lowest first)","Items not Sorted Properly");
             Reports.extentTest.log(Status.PASS,"Selected Item:"+searchKeyword+" and sorted by lowest first",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
-
+        }
+        catch(AssertionError e){
+            Reports.extentTest.log(Status.FAIL,"Selected Item:"+searchKeyword+" and sorted by lowest first",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
         catch (Exception e)
         {
             Reports.extentTest.log(Status.FAIL,"Selected Item:"+searchKeyword+" and sorted by lowest first",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
     }
 
     public void filterPriceHighest(String searchKeyword) throws IOException {
-
         try{
             String text="";
             search(searchKeyword);
-            locateElement(filterDropdown);
-
-            findElement(filterDropdown);
             selectDropDown(filterDropdown,"Price (highest first)");
             Thread.sleep(1000);
             //implicitWait(10);
-
             text=getSelectedTextFromDropDown(filterDropdown);
             Assert.assertEquals(text,"Price (highest first)","Items not Sorted Properly");
             Reports.extentTest.log(Status.PASS,"Selected Item:"+searchKeyword+" and sorted by highest first",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
         }
+        catch(AssertionError e){
+            Reports.extentTest.log(Status.FAIL,"Selected Item:"+searchKeyword+" and sorted by highest first",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
+        }
         catch (Exception e)
         {
             Reports.extentTest.log(Status.FAIL,"Selected Item:"+searchKeyword+" and sorted by highest first",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
-
     }
 
     public void verifyFooter() throws IOException {
@@ -325,9 +347,14 @@ public class HomePage extends BasePage{
             Assert.assertTrue(b=true,"Links not visible");
             Reports.extentTest.log(Status.PASS,"Verify the text 'Who We Are', 'Join Our Team',  'Terms & Conditions'" ,MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
         }
+        catch(AssertionError e){
+            Reports.extentTest.log(Status.FAIL,"Verify the text 'Who We Are', 'Join Our Team',  'Terms & Conditions'" ,MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
+        }
         catch(Exception e)
         {
             Reports.extentTest.log(Status.FAIL,"Verify the text 'Who We Are', 'Join Our Team',  'Terms & Conditions'" ,MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
     }
 
@@ -340,7 +367,6 @@ public class HomePage extends BasePage{
             click(imageItem);
             implicitWait(10);
             String mainWindow = driver.getWindowHandle();
-
             Set<String> set = driver.getWindowHandles();
             Iterator<String> itr = set.iterator();
             while (itr.hasNext()) {
@@ -355,12 +381,15 @@ public class HomePage extends BasePage{
                     Reports.extentTest.log(Status.PASS,"Selected Item:"+searchKeyword+" and viewed the return policy",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
                 }
             }
-
-
+        }
+        catch(AssertionError e){
+            Reports.extentTest.log(Status.FAIL,"Selected Item:"+searchKeyword+" and viewed the return policy",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
         catch(Exception e)
         {
             Reports.extentTest.log(Status.FAIL,"Selected Item:"+searchKeyword+" and viewed the return policy",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
     }
 
@@ -377,8 +406,13 @@ public class HomePage extends BasePage{
             Assert.assertTrue(b=true,"Links not visible");
             Reports.extentTest.log(Status.PASS,"Verified Men's Jeans and Shirts link ",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
         }
+        catch(AssertionError e){
+            Reports.extentTest.log(Status.FAIL,"Verified Men's Jeans and Shirts link",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
+        }
         catch(Exception e){
             Reports.extentTest.log(Status.FAIL,"Verified Men's Jeans and Shirts link",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
 
 
@@ -391,7 +425,6 @@ public class HomePage extends BasePage{
             click(menLink);
             implicitWait(10);
             String url1= driver.getCurrentUrl();
-            //takeScreenshot();
 
             locateElement(womenLink);
             findElement(womenLink);
@@ -402,15 +435,20 @@ public class HomePage extends BasePage{
             locateElement(kidsLink);
             findElement(kidsLink);
             click(kidsLink);
-            implicitWait(10);
+            //implicitWait(10);
             Thread.sleep(1000);
             String url3= driver.getCurrentUrl();
-
-            Reports.extentTest.log(Status.PASS,"Verify Url Changes For Men, Women and Kids",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
             Assert.assertTrue((!(url1.equals(url2))&&!(url2.equals(url3))&&!(url1.equals(url3))),"Urls cannot be the same");
+            Reports.extentTest.log(Status.PASS,"Verify Url Changes For Men, Women and Kids",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+
+        }
+        catch(AssertionError e){
+            Reports.extentTest.log(Status.FAIL,"Verify Url Changes For Men, Women and Kids",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
         catch(Exception e){
             Reports.extentTest.log(Status.FAIL,"Verify Url Changes For Men, Women and Kids",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
 
     }
@@ -421,26 +459,26 @@ public class HomePage extends BasePage{
             locateElement(menLink);
             findElement(menLink);
             mousehoverMainMenu(menLink);
-            //implicitWait(10);
-            Thread.sleep(2000);
+            implicitWait(10);
+            //Thread.sleep(2000);
 
             locateElement(womenLink);
             findElement(womenLink);
             mousehoverMainMenu(womenLink);
-            //implicitWait(10);
-            Thread.sleep(2000);
+            implicitWait(10);
+            //Thread.sleep(2000);
 
             locateElement(kidsLink);
             findElement(kidsLink);
             mousehoverMainMenu(kidsLink);
-            //implicitWait(10);
-            Thread.sleep(2000);
+            implicitWait(10);
+            //Thread.sleep(2000);
 
             locateElement(indielink);
             findElement(indielink);
             mousehoverMainMenu(indielink);
-            //implicitWait(10);
-            Thread.sleep(2000);
+            implicitWait(10);
+            //Thread.sleep(2000);
 
             locateElement(kitchenlink);
             findElement(kitchenlink);
@@ -456,8 +494,13 @@ public class HomePage extends BasePage{
             Assert.assertTrue(b=true,"All menu items not visible");
            Reports.extentTest.log(Status.PASS,"Verify Menu For Men, Women, Kids, indie and Home & Kitchen",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
         }
+        catch(AssertionError e){
+            Reports.extentTest.log(Status.FAIL,"Verify Menu For Men, Women, Kids, indie and Home & Kitchen",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
+        }
         catch (Exception e){
            Reports.extentTest.log(Status.FAIL,"Verify Menu For Men, Women, Kids, indie and Home & Kitchen",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot()).build());
+            Assert.fail();
         }
 
     }
